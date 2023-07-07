@@ -38,9 +38,11 @@ dependencies:
  
   flutter_resizable_container: ^0.1.2
   flutter_ruler_picker: ^1.0.3
+  gallery_saver: ^2.3.2
   get_it: ^7.6.0
   image_picker: ^1.0.0
   multi_split_view: ^2.4.0
+  resizable_draggable_widget: ^0.0.5
   resizable_widget: ^1.0.5
   rulers: ^1.0.7
 
