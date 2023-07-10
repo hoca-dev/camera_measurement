@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ruler_picker/flutter_ruler_picker.dart';
 import 'package:resizable_draggable_widget/resizable_draggable_widget.dart';
+import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:test1/previewPage.dart';
 
 
@@ -22,15 +25,15 @@ class _MyWidgetState extends State<MyWidget> {
  double containerWidth = 0;
 
 
-
-
   @override
   void initState() {
+
+
    _rulerPickerController = RulerPickerController(value: 0);
     super.initState();
         startCamera(direction);
+       
   }
-
 
     void startCamera(int direction) async {
     cameras = await availableCameras();
@@ -54,41 +57,49 @@ class _MyWidgetState extends State<MyWidget> {
       print(e);
     });
   }
+
+ waiting (){
+return const CircularProgressIndicator();
+}
  @override
   void dispose() {
     cameraController.dispose();
     super.dispose();
   }
+
+  circularProgressView(){
+    return  showDialog(
+          context: context,
+          builder: (context) {
+            return const Center(
+              child:  SimpleCircularProgressBar(
+                size: 45,
+                progressStrokeWidth: 9,
+                progressColors: [Colors.red, Colors.blue],
+                fullProgressColor: Colors.orange,
+                animationDuration: 2,
+              ),
+            );
+          });
+  }
+
+  
   @override
   Widget build(BuildContext context) {
-     
+ 
+ Future.delayed(const Duration(seconds: 3));
+
     var size =MediaQuery.of(context).size;
     double height = size.height;
     return Scaffold(
       body: Stack(
         children: [
-
-
-
-
-
-//TODO camera 
-
-
+// camera 
 Positioned(
                 left: 25,
                   right: 25,
                   child: CameraPreview(cameraController)),
-
-
-
-
-
-
-
-
-
-          //TODO ruler 
+          // ruler 
           Align(
             alignment: AlignmentDirectional.bottomCenter,
             child: RulerPicker(
@@ -114,14 +125,18 @@ Positioned(
                rulerMarginTop: 8,
              ),
           ),
+          //TODO take a picture function 
            Positioned(
                 bottom: height /2.7,
                 right: 13,
                 child: GestureDetector(
-                  onTap: () {
+                  onTap: ()   {
+                     circularProgressView();
                     cameraController.takePicture().then((XFile? file) {
                       if(mounted) {
-                        if(file != null) {
+                        if(file != null)  {
+                      
+                       
                           Navigator.push(context, MaterialPageRoute(builder: (context)=> PreviewPage(picture: file,)));
                         }
                       }
@@ -147,9 +162,9 @@ Positioned(
               print(
                   "width: ${width.toStringAsFixed(2)}, height: $height, tranformOffset: $tranformOffset");
             },
-            child:  const Center(
-              child: Text('슬라이드하여 크그 변경 가능'),
-            ),
+            // child:  const Center(
+            //   child: Text('슬라이드하여 크그 변경 가능'),
+            // ),
           ),
  ),
             
