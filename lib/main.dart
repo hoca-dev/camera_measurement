@@ -1,14 +1,9 @@
-// import 'dart:html';
 
-
-
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:test1/mainpage.dart';
 
 void main() async {
      WidgetsFlutterBinding.ensureInitialized();
- final cameras = await availableCameras();
   runApp(const MyApp());
 }
 
@@ -17,12 +12,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Ruler Picker Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home:  const MyWidget(),
+    return const MaterialApp(
+      home:  CameraPage(),
     );
   }
 }

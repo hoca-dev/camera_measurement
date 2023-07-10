@@ -84,12 +84,12 @@ RulerPickerController? _rulerPickerController;
             icon: const Icon(Icons.arrow_back_ios, color: Colors.black,),
             onPressed: (){
               circularProgressView();
-               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const MyWidget()));
+               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const CameraPage()));
             }
             
                   ),
                     MaterialButton(
-              child: const Text('저장', style: TextStyle(color: Colors.blue, fontSize: 17),),
+              child: const Text('저장', style: TextStyle(color: Colors.blue, fontSize: 17, fontWeight: FontWeight.bold),),
               onPressed: (){
                 //TODO => main page once the picture is saved 
                 ScaffoldMessenger.of(context).showSnackBar(snackBarMessage);
@@ -157,7 +157,7 @@ RulerPickerController? _rulerPickerController;
           top: top - ballDiameter / 2,
           left: left + width / 2 - ballDiameter / 2,
           child: ManipulatingBall(
-    customChild: const Icon(Icons.remove, size: 50,),
+     customChild:const Icon(Icons.keyboard_arrow_up, size: 30,),
             onDrag: (dx, dy) {
               var newHeight = height - dy;
 
@@ -194,7 +194,7 @@ RulerPickerController? _rulerPickerController;
           top: top + height / 2 - ballDiameter / 2,
           left: left + width - ballDiameter / 2,
           child: ManipulatingBall(
-            customChild: const Icon(Icons.remove, size: 50,),
+             customChild:const Icon(Icons.keyboard_arrow_right, size: 30,),
             onDrag: (dx, dy) {
               var newWidth = width + dx;
 
@@ -230,7 +230,7 @@ RulerPickerController? _rulerPickerController;
           top: top + height - ballDiameter / 2,
           left: left + width / 2 - ballDiameter / 2,
           child: ManipulatingBall(
-            customChild: const Icon(Icons.remove, size: 50,),
+         customChild:const Icon(Icons.keyboard_arrow_down, size: 30,),
             onDrag: (dx, dy) {
               var newHeight = height + dy;
 
@@ -267,7 +267,7 @@ RulerPickerController? _rulerPickerController;
           top: top + height / 2 - ballDiameter / 2,
           left: left - ballDiameter / 2,
           child: ManipulatingBall(
-            customChild: const Icon(Icons.remove, size: 50,),
+           customChild:const Icon(Icons.keyboard_arrow_left, size: 30,),
             onDrag: (dx, dy) {
               var newWidth = width - dx;
 

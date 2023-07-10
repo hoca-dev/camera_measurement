@@ -1,4 +1,4 @@
-import 'dart:async';
+
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -8,16 +8,15 @@ import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:test1/previewPage.dart';
 
 
-class MyWidget extends StatefulWidget {
-  const MyWidget({super.key});
+class CameraPage extends StatefulWidget {
+  const CameraPage({super.key});
 
   @override
-  State<MyWidget> createState() => _MyWidgetState();
+  State<CameraPage> createState() => _CameraPageState();
 }
 
-class _MyWidgetState extends State<MyWidget> {
+class _CameraPageState extends State<CameraPage> {
    late List<CameraDescription> cameras;
-  //TODO error causing line 
     CameraController? cameraController;
   RulerPickerController? _rulerPickerController;
   var currentValue = 4000;
@@ -37,7 +36,6 @@ class _MyWidgetState extends State<MyWidget> {
 
     void startCamera(int direction) async {
     cameras = await availableCameras();
-// var cameraSpecs = const CameraDescription(name: 'photo ', lensDirection: CameraLensDirection.back, sensorOrientation: 180);
     cameraController = CameraController(
     
       cameras[direction],
@@ -139,7 +137,8 @@ Positioned(
           ),
           //TODO take a picture function 
            Positioned(
-                bottom: height /2.7,
+                bottom: height /2.5,
+              
                 right: 13,
                 child: GestureDetector(
                   onTap: ()   {

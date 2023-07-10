@@ -75,6 +75,8 @@ flutter:
     - assets/icons/bottomRight.png
     - assets/icons/topRight.png
     - assets/icons/topLeft.png
+    - assets/icons/vertical.png
+    - assets/icons/horizontal.png
     
   #   - images/a_dot_ham.jpeg
 
