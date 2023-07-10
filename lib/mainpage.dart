@@ -18,7 +18,7 @@ class MyWidget extends StatefulWidget {
 class _MyWidgetState extends State<MyWidget> {
    late List<CameraDescription> cameras;
   //TODO error causing line 
-   late CameraController cameraController;
+    CameraController? cameraController;
   RulerPickerController? _rulerPickerController;
   var currentValue = 4000;
  int direction = 0;
@@ -48,7 +48,7 @@ class _MyWidgetState extends State<MyWidget> {
       
     );
 
-    await cameraController.initialize().then((value) {
+    await cameraController?.initialize().then((value) {
       if(!mounted) {
         return;
       }
@@ -63,7 +63,7 @@ return const CircularProgressIndicator();
 }
  @override
   void dispose() {
-    cameraController.dispose();
+    cameraController?.dispose();
     super.dispose();
   }
 
@@ -86,11 +86,23 @@ return const CircularProgressIndicator();
   
   @override
   Widget build(BuildContext context) {
- 
- Future.delayed(const Duration(seconds: 3));
 
     var size =MediaQuery.of(context).size;
     double height = size.height;
+
+    if (cameraController == null || !cameraController!.value.isInitialized){
+      return const Scaffold(
+        body: Center(
+              child:  SimpleCircularProgressBar(
+                size: 45,
+                progressStrokeWidth: 9,
+                progressColors: [Colors.red, Colors.blue],
+                fullProgressColor: Colors.orange,
+                animationDuration: 2,
+              ),
+            )
+      );
+    }
     return Scaffold(
       body: Stack(
         children: [
@@ -98,7 +110,7 @@ return const CircularProgressIndicator();
 Positioned(
                 left: 25,
                   right: 25,
-                  child: CameraPreview(cameraController)),
+                  child: CameraPreview(cameraController!)),
           // ruler 
           Align(
             alignment: AlignmentDirectional.bottomCenter,
@@ -132,7 +144,7 @@ Positioned(
                 child: GestureDetector(
                   onTap: ()   {
                      circularProgressView();
-                    cameraController.takePicture().then((XFile? file) {
+                    cameraController!.takePicture().then((XFile? file) {
                       if(mounted) {
                         if(file != null)  {
                       

@@ -8,7 +8,7 @@ import 'package:test1/mainpage.dart';
 
 void main() async {
      WidgetsFlutterBinding.ensureInitialized();
-  // await availableCameras();
+ final cameras = await availableCameras();
   runApp(const MyApp());
 }
 
