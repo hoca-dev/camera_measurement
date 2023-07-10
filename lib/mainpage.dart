@@ -2,6 +2,7 @@
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_ruler_picker/flutter_ruler_picker.dart';
 import 'package:resizable_draggable_widget/resizable_draggable_widget.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
@@ -26,7 +27,10 @@ class _CameraPageState extends State<CameraPage> {
 
   @override
   void initState() {
-
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight
+  ]);
 
    _rulerPickerController = RulerPickerController(value: 0);
     super.initState();
@@ -61,6 +65,10 @@ return const CircularProgressIndicator();
 }
  @override
   void dispose() {
+      SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.portraitUp
+  ]);
     cameraController?.dispose();
     super.dispose();
   }
