@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_ruler_picker/flutter_ruler_picker.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
-import 'package:test1/mainpage.dart';
+import 'package:test1/cameraPage.dart';
 import 'package:test1/utils/manipulationBall.dart';
 
 

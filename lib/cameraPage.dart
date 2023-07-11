@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_ruler_picker/flutter_ruler_picker.dart';
 import 'package:resizable_draggable_widget/resizable_draggable_widget.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
-import 'package:test1/previewPage.dart';
+import 'package:test1/cameraPicPriview.dart';
 
 
 class CameraPage extends StatefulWidget {
