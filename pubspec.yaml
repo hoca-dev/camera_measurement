@@ -45,6 +45,7 @@ dependencies:
   resizable_draggable_widget: ^0.0.5
   resizable_widget: ^1.0.5
   rulers: ^1.0.7
+  screenshot: ^2.1.0
   simple_circular_progress_bar: ^1.0.2
 
 dev_dependencies:
@@ -77,6 +78,10 @@ flutter:
     - assets/icons/topLeft.png
     - assets/icons/vertical.png
     - assets/icons/horizontal.png
+    - assets/frame/ruler.png
+    - assets/frame/cardHolder.png
+    - assets/frame/ruler42.png
+    
     
   #   - images/a_dot_ham.jpeg
 

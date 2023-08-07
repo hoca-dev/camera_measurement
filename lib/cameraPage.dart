@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_ruler_picker/flutter_ruler_picker.dart';
 import 'package:resizable_draggable_widget/resizable_draggable_widget.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:test1/cameraPicPriview.dart';
 
@@ -19,7 +20,7 @@ class CameraPage extends StatefulWidget {
 class _CameraPageState extends State<CameraPage> {
    late List<CameraDescription> cameras;
     CameraController? cameraController;
-  RulerPickerController? _rulerPickerController;
+  ScreenshotController screenshotController = ScreenshotController();
   var currentValue = 4000;
  int direction = 0;
  double containerWidth = 0;
@@ -32,7 +33,7 @@ class _CameraPageState extends State<CameraPage> {
     DeviceOrientation.landscapeRight
   ]);
 
-   _rulerPickerController = RulerPickerController(value: 0);
+  
     super.initState();
         startCamera(direction);
        
@@ -97,53 +98,72 @@ return const CircularProgressIndicator();
     double height = size.height;
 
     if (cameraController == null || !cameraController!.value.isInitialized){
-      return const Scaffold(
-        body: Center(
-              child:  SimpleCircularProgressBar(
-                size: 45,
-                progressStrokeWidth: 9,
-                progressColors: [Colors.red, Colors.blue],
-                fullProgressColor: Colors.orange,
-                animationDuration: 2,
-              ),
-            )
+      return Screenshot(
+        controller: screenshotController,
+        child: const Scaffold(
+          body: Center(
+                child:  SimpleCircularProgressBar(
+                  size: 45,
+                  progressStrokeWidth: 9,
+                  progressColors: [Colors.red, Colors.blue],
+                  fullProgressColor: Colors.orange,
+                  animationDuration: 2,
+                ),
+              )
+        ),
       );
     }
     return Scaffold(
       body: Stack(
         children: [
 // camera 
-Positioned(
-                left: 25,
-                  right: 25,
+        Positioned(
+          right: 1,
+          left: 1,
                   child: CameraPreview(cameraController!)),
           // ruler 
           Align(
             alignment: AlignmentDirectional.bottomCenter,
-            child: RulerPicker(
-               controller: _rulerPickerController!,
-               beginValue: 0,
-               endValue: 100,
-               initValue: currentValue,
-               scaleLineStyleList: const [
-                 ScaleLineStyle(
-                     color: Colors.grey, width: 1.5, height: 30, scale: 0),
-                 ScaleLineStyle(
-                     color: Colors.grey, width: 1, height: 25, scale: 5),
-                 ScaleLineStyle(
-                     color: Colors.grey, width: 1, height: 15, scale: -1)
-               ],
-               onValueChange: (value) {
-                 setState(() {
-                   currentValue = value;
-                 });
-               },
-               width: MediaQuery.of(context).size.width,
-               height: 50,
-               rulerMarginTop: 8,
-             ),
+            child: Container(
+              height: 45,
+              child: Image.asset('assets/frame/ruler42.png',
+              fit: BoxFit.cover,
+                ),
+            ),
+            // child: RulerPicker(
+            //    controller: _rulerPickerController!,
+            //    beginValue: 0,
+            //    endValue: 100,
+            //    initValue: currentValue,
+            //    scaleLineStyleList: const [
+            //      ScaleLineStyle(
+            //          color: Colors.grey, width: 1.5, height: 30, scale: 0),
+            //      ScaleLineStyle(
+            //          color: Colors.grey, width: 1, height: 25, scale: 5),
+            //      ScaleLineStyle(
+            //          color: Colors.grey, width: 1, height: 15, scale: -1)
+            //    ],
+            //    onValueChange: (value) {
+            //      setState(() {
+            //        currentValue = value;
+            //      });
+            //    },
+            //    width: MediaQuery.of(context).size.width,
+            //    height: 50,
+            //    rulerMarginTop: 8,
+            //  ),
           ),
-          //TODO take a picture function 
+          //cardBox
+          Positioned(
+                top: height /1.7,
+              
+                left: 21,
+                child: SizedBox(
+                  height: 100,
+                  width: 120,
+                  child: Image.asset('assets/frame/cardHolder.png'),
+                ),
+              ),
            Positioned(
                 bottom: height /2.5,
               
@@ -151,15 +171,13 @@ Positioned(
                 child: GestureDetector(
                   onTap: ()   {
                      circularProgressView();
-                    cameraController!.takePicture().then((XFile? file) {
-                      if(mounted) {
-                        if(file != null)  {
-                      
-                       
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=> PreviewPage(picture: file,)));
-                        }
-                      }
-                    });
+                   screenshotController
+                    .capture(delay: const Duration(milliseconds: 10))
+                    .then((capturedImage) async {
+                  ShowCapturedWidget(context, capturedImage!);
+                }).catchError((onError) {
+                  print(onError);
+                });
                   },
                   child: button(Icons.camera_alt_outlined, Alignment.bottomCenter,),
                 ),
@@ -223,4 +241,5 @@ Widget button(IconData icon, Alignment alignment) {
     ),
   );
 }
+
 }
