@@ -1,28 +1,76 @@
 
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:test1/cameraPage.dart';
 
 
 
- Future<dynamic> ShowCapturedWidget(
-      BuildContext context, Uint8List capturedImage) {
-    return showDialog(
-      useSafeArea: false,
-      context: context,
-      builder: (context) => Scaffold(
+
+
+class PicturePreviewPage extends StatelessWidget {
+  Uint8List capturedImage;
+   PicturePreviewPage({super.key, required this.capturedImage});
+
+  @override
+  Widget build(BuildContext context) {
+    const snackBarMessage = SnackBar(content:  Text('사진이 저장되었습니다'));
+    return Scaffold(
         appBar: AppBar(
-          title: const Text("Captured widget screenshot"),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          actions: [
+            TextButton(onPressed: () async {
+              
+                ScaffoldMessenger.of(context).showSnackBar(snackBarMessage);
+                await ImageGallerySaver.saveImage(capturedImage);
+
+              // GallerySaver.saveImage(capturedImage);
+            }, child: const Text('저장',style: TextStyle(color: Colors.blue, fontSize: 17, fontWeight: FontWeight.bold),),),
+          ],
+          leading: IconButton(
+            onPressed: (){
+                // circularProgressView();
+         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const CameraPage()));
+            },
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.black,),
+          ),
+        
         ),
         body: Center(child: Image.memory(capturedImage)),
-      ),
-    );
+      );
   }
+}
 
+//  Future<dynamic> ShowCapturedWidget(
+//       BuildContext context, Uint8List capturedImage) {
+          
+//     return showDialog(
+//       useSafeArea: false,
+//       context: context,
+//       builder: (context) => Scaffold(
+//         appBar: AppBar(
+//           elevation: 0,
+//           backgroundColor: Colors.transparent,
+//           actions: [
+//             TextButton(onPressed: () async {
+              
+//                 ScaffoldMessenger.of(context).showSnackBar(snackBarMessage);
+//                 await ImageGallerySaver.saveImage(capturedImage);
 
-
-
-
+//               // GallerySaver.saveImage(capturedImage);
+//             }, child: const Text('저장',style: TextStyle(color: Colors.blue, fontSize: 17, fontWeight: FontWeight.bold),),),
+//           ],
+//           leading: IconButton(
+//             onPressed: () => Navigator.pop(context),
+//             icon: const Icon(Icons.arrow_back_ios, color: Colors.black,),
+//           ),
+        
+//         ),
+//         body: Center(child: Image.memory(capturedImage)),
+//       ),
+//     );
+//   }
 
 
 
@@ -135,31 +183,7 @@ import 'package:flutter/material.dart';
 //           child:  Image.file(File(widget.picture.path,), fit: BoxFit.fitWidth,),
 //          ),
 //            //ruler
-//           Align(
-//             alignment: AlignmentDirectional.bottomCenter,
-//             child: RulerPicker(
-//                controller: _rulerPickerController,
-//                beginValue: 0,
-//                endValue: 100,
-//                initValue: currentValue,
-//                scaleLineStyleList: const [
-//                  ScaleLineStyle(
-//                      color: Colors.grey, width: 1.5, height: 30, scale: 0),
-//                  ScaleLineStyle(
-//                      color: Colors.grey, width: 1, height: 25, scale: 5),
-//                  ScaleLineStyle(
-//                      color: Colors.grey, width: 1, height: 15, scale: -1)
-//                ],
-//                onValueChange: (value) {
-//                  setState(() {
-//                    currentValue = value;
-//                  });
-//                },
-//                width: MediaQuery.of(context).size.width,
-//                height: 50,
-//                rulerMarginTop: 8,
-//              ),
-//           ),
+
 //          // top left 
 //                   Positioned(
 //           top: top - ballDiameter / 2,

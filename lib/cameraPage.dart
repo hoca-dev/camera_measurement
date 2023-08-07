@@ -113,99 +113,78 @@ return const CircularProgressIndicator();
         ),
       );
     }
-    return Scaffold(
-      body: Stack(
-        children: [
-// camera 
-        Positioned(
-          right: 1,
-          left: 1,
-                  child: CameraPreview(cameraController!)),
-          // ruler 
-          Align(
-            alignment: AlignmentDirectional.bottomCenter,
-            child: Container(
-              height: 45,
-              child: Image.asset('assets/frame/ruler42.png',
-              fit: BoxFit.cover,
-                ),
-            ),
-            // child: RulerPicker(
-            //    controller: _rulerPickerController!,
-            //    beginValue: 0,
-            //    endValue: 100,
-            //    initValue: currentValue,
-            //    scaleLineStyleList: const [
-            //      ScaleLineStyle(
-            //          color: Colors.grey, width: 1.5, height: 30, scale: 0),
-            //      ScaleLineStyle(
-            //          color: Colors.grey, width: 1, height: 25, scale: 5),
-            //      ScaleLineStyle(
-            //          color: Colors.grey, width: 1, height: 15, scale: -1)
-            //    ],
-            //    onValueChange: (value) {
-            //      setState(() {
-            //        currentValue = value;
-            //      });
-            //    },
-            //    width: MediaQuery.of(context).size.width,
-            //    height: 50,
-            //    rulerMarginTop: 8,
-            //  ),
-          ),
-          //cardBox
+    return Screenshot(
+      controller: screenshotController,
+      child: Scaffold(
+        body: Stack(
+          children: [
+    // camera 
           Positioned(
-                top: height /1.7,
-              
-                left: 21,
-                child: SizedBox(
-                  height: 100,
-                  width: 120,
-                  child: Image.asset('assets/frame/cardHolder.png'),
-                ),
+            right: 1,
+            left: 1,
+                    child: CameraPreview(cameraController!)),
+            // ruler 
+            Align(
+              alignment: AlignmentDirectional.bottomCenter,
+              child: Container(
+                height: 45,
+                child: Image.asset('assets/frame/ruler42.png',
+                fit: BoxFit.cover,
+                  ),
               ),
-           Positioned(
-                bottom: height /2.5,
-              
-                right: 13,
-                child: GestureDetector(
-                  onTap: ()   {
-                     circularProgressView();
-                   screenshotController
-                    .capture(delay: const Duration(milliseconds: 10))
-                    .then((capturedImage) async {
-                  ShowCapturedWidget(context, capturedImage!);
-                }).catchError((onError) {
-                  print(onError);
-                });
-                  },
-                  child: button(Icons.camera_alt_outlined, Alignment.bottomCenter,),
+            ),
+            //cardBox
+            Positioned(
+                  top: height /1.7,
+                
+                  left: 21,
+                  child: SizedBox(
+                    height: 100,
+                    width: 120,
+                    child: Image.asset('assets/frame/cardHolder.png'),
+                  ),
                 ),
-              ),
-            
-           //TODO draggable Container 
- Align(
-  alignment: AlignmentDirectional.center,
-   child: ResizableDraggableWidget(
-            initHeight: 300,
-            initWidth: 300,
-            showSquare: true,
-            draggable: true,
-            bgColor: Colors.transparent,
-            squareColor: Colors.green,
-            changed: (width, height, tranformOffset) {
-            
-            
-              print(
-                  "width: ${width.toStringAsFixed(2)}, height: $height, tranformOffset: $tranformOffset");
-            },
-            // child:  const Center(
-            //   child: Text('슬라이드하여 크그 변경 가능'),
-            // ),
-          ),
- ),
-            
-        ],
+             Positioned(
+                  bottom: height /2.5,
+                
+                  right: 13,
+                  child: GestureDetector(
+                    onTap: ()   {
+                       circularProgressView();
+                     screenshotController
+                      .capture(delay: const Duration(milliseconds: 10))
+                      .then((capturedImage) async {
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=> PicturePreviewPage(capturedImage: capturedImage!)));
+                    // ShowCapturedWidget(context, capturedImage!);
+                  }).catchError((onError) {
+                    print(onError);
+                  });
+                    },
+                    child: button(Icons.camera_alt_outlined, Alignment.bottomCenter,),
+                  ),
+                ),
+              
+             //TODO draggable Container 
+     Align(
+      alignment: AlignmentDirectional.center,
+       child: ResizableDraggableWidget(
+              initHeight: 300,
+              initWidth: 300,
+              showSquare: true,
+              draggable: true,
+              bgColor: Colors.transparent,
+              squareColor: Colors.green,
+              changed: (width, height, tranformOffset) {
+              
+              
+                print(
+                    "width: ${width.toStringAsFixed(2)}, height: $height, tranformOffset: $tranformOffset");
+              },
+            ),
+     ),
+              
+          ],
+        ),
       ),
     );
   }
@@ -241,5 +220,6 @@ Widget button(IconData icon, Alignment alignment) {
     ),
   );
 }
+
 
 }
