@@ -9,7 +9,7 @@ final Widget customChild;
   @override
   _ManipulatingBallState createState() => _ManipulatingBallState();
 }
-const ballDiameter = 30.0;
+const ballDiameter = 70.0;
 
 class _ManipulatingBallState extends State<ManipulatingBall> {
   double? initX;
@@ -38,8 +38,8 @@ class _ManipulatingBallState extends State<ManipulatingBall> {
       onPanUpdate: _handleUpdate,
       child: SizedBox(
 
-        width: ballDiameter,
-        height: ballDiameter,
+        width: 7,
+        height: 100,
         // decoration:  BoxDecoration(
         //   border: Border.all(width: 2, color: Colors.black),
         //   color: Colors.red,

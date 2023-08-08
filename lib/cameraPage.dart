@@ -8,6 +8,7 @@ import 'package:resizable_draggable_widget/resizable_draggable_widget.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:test1/cameraPicPriview.dart';
+import 'package:test1/utils/manipulationBall.dart';
 
 
 class CameraPage extends StatefulWidget {
@@ -89,10 +90,23 @@ return const CircularProgressIndicator();
             );
           });
   }
+final ballDiameter = 70.0;
+    double height = 200;
+  double width = 200;
+  double top = 100;
+  double left = 320;
+    void onDrag(double dx, double dy) {
+    var newHeight = height + dy;
+    var newWidth = width + dx;
 
-  
+    setState(() {
+      height = newHeight > 0 ? newHeight : 0;
+      width = newWidth > 0 ? newWidth : 0;
+    });
+  }
   @override
   Widget build(BuildContext context) {
+double bannerHeight = 200;
 
     var size =MediaQuery.of(context).size;
     double height = size.height;
@@ -127,20 +141,21 @@ return const CircularProgressIndicator();
             Align(
               alignment: AlignmentDirectional.bottomCenter,
               child: Container(
+                padding: const EdgeInsets.only(left: 8, right: 10),
                 height: 45,
-                child: Image.asset('assets/frame/ruler42.png',
-                fit: BoxFit.cover,
+                child: Image.asset('assets/frame/70ruler.png',
+                fit: BoxFit.fill,
                   ),
               ),
             ),
             //cardBox
             Positioned(
-                  top: height /1.7,
+                  top: height /1.6,
                 
-                  left: 21,
+                  left: 10,
                   child: SizedBox(
                     height: 100,
-                    width: 120,
+                    width: 99,
                     child: Image.asset('assets/frame/cardHolder.png'),
                   ),
                 ),
@@ -165,28 +180,58 @@ return const CircularProgressIndicator();
                 ),
               
              //TODO draggable Container 
-     Align(
-      alignment: AlignmentDirectional.center,
-       child: ResizableDraggableWidget(
-              initHeight: 300,
-              initWidth: 300,
-              showSquare: true,
-              draggable: true,
-              bgColor: Colors.transparent,
-              squareColor: Colors.green,
-              changed: (width, height, tranformOffset) {
+    //  Align(
+    //   alignment: AlignmentDirectional.center,
+    //    child: ResizableDraggableWidget(
+    //           initHeight: 300,
+    //           initWidth: 300,
+    //           showSquare: true,
+    //           draggable: true,
+    //           bgColor: Colors.transparent,
+    //           squareColor: Colors.green,
+    //           changed: (width, height, tranformOffset) {
               
               
-                print(
-                    "width: ${width.toStringAsFixed(2)}, height: $height, tranformOffset: $tranformOffset");
-              },
-            ),
-     ),
-              
-          ],
+    //             print(
+    //                 "width: ${width.toStringAsFixed(2)}, height: $height, tranformOffset: $tranformOffset");
+    //           },
+    //         ),
+    //  ),
+               
+       //center right
+         Positioned(
+          top: top + height / 2 - ballDiameter / 0.55,
+          left: left + width - ballDiameter / 2,
+          child: ManipulatingBall(
+            onDrag: (dx, dy) {
+              var newWidth = width + dx;
+
+              setState(() {
+                width = newWidth > 0 ? newWidth : 0;
+              });
+            }, customChild: Image.asset('assets/icons/vertical.png', fit: BoxFit.fitHeight,),
+          ),
         ),
+        
+         Positioned(
+          top: top + height / 2 - ballDiameter / 0.55,
+          left: left - ballDiameter / 2,
+          child: ManipulatingBall(
+            onDrag: (dx, dy) {
+              var newWidth = width - dx;
+
+              setState(() {
+                width = newWidth > 0 ? newWidth : 0;
+                left = left + dx;
+              });
+            }, customChild: Image.asset('assets/icons/vertical.png', fit: BoxFit.fitHeight,),),
+          ),
+
+        ],
       ),
+    ),
     );
+  
   }
 
 
