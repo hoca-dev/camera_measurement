@@ -36,14 +36,14 @@ class _ManipulatingBallState extends State<ManipulatingBall> {
     return GestureDetector(
       onPanStart: _handleDrag,
       onPanUpdate: _handleUpdate,
-      child: SizedBox(
+      child: Container(
 
-        width: 7,
-        height: 100,
-        // decoration:  BoxDecoration(
-        //   border: Border.all(width: 2, color: Colors.black),
-        //   color: Colors.red,
-        // ),
+        width: 50,
+        height: 200,
+        decoration:  BoxDecoration(
+          border: Border.all(color: Colors.transparent, width: 0.0),
+
+        ),
         child: widget.customChild,
       ),
     );

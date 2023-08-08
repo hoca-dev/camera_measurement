@@ -90,9 +90,9 @@ return const CircularProgressIndicator();
             );
           });
   }
-final ballDiameter = 70.0;
+final ballDiameter = 90.0;
     double height = 200;
-  double width = 200;
+  double width = 100;
   double top = 100;
   double left = 320;
     void onDrag(double dx, double dy) {
@@ -178,7 +178,10 @@ double bannerHeight = 200;
                     child: button(Icons.camera_alt_outlined, Alignment.bottomCenter,),
                   ),
                 ),
-              
+              const Positioned(
+                left: 8,
+                child: LengthIdentifier()
+              ),
              //TODO draggable Container 
     //  Align(
     //   alignment: AlignmentDirectional.center,
@@ -201,7 +204,7 @@ double bannerHeight = 200;
        //center right
          Positioned(
           top: top + height / 2 - ballDiameter / 0.55,
-          left: left + width - ballDiameter / 2,
+          left: left + width - ballDiameter / 0.4,
           child: ManipulatingBall(
             onDrag: (dx, dy) {
               var newWidth = width + dx;
@@ -209,23 +212,23 @@ double bannerHeight = 200;
               setState(() {
                 width = newWidth > 0 ? newWidth : 0;
               });
-            }, customChild: Image.asset('assets/icons/vertical.png', fit: BoxFit.fitHeight,),
+            }, customChild: const LengthIdentifier(),
           ),
         ),
         
-         Positioned(
-          top: top + height / 2 - ballDiameter / 0.55,
-          left: left - ballDiameter / 2,
-          child: ManipulatingBall(
-            onDrag: (dx, dy) {
-              var newWidth = width - dx;
+        //  Positioned(
+        //   top: top + height / 2 - ballDiameter / 0.55,
+        //   left: left - ballDiameter / 2,
+        //   child: ManipulatingBall(
+        //     onDrag: (dx, dy) {
+        //       var newWidth = width - dx;
 
-              setState(() {
-                width = newWidth > 0 ? newWidth : 0;
-                left = left + dx;
-              });
-            }, customChild: Image.asset('assets/icons/vertical.png', fit: BoxFit.fitHeight,),),
-          ),
+        //       setState(() {
+        //         width = newWidth > 0 ? newWidth : 0;
+        //         left = left + dx;
+        //       });
+        //     }, customChild: Image.asset('assets/icons/vertical.png', fit: BoxFit.fitHeight,),),
+        //   ),
 
         ],
       ),
@@ -267,4 +270,47 @@ Widget button(IconData icon, Alignment alignment) {
 }
 
 
+}
+
+
+
+
+
+
+class LengthIdentifier extends StatelessWidget {
+  const LengthIdentifier({Key? key, this.height = 2, this.color = Colors.white})
+      : super(key: key);
+  final double height;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    return SizedBox(
+      height: width,
+   
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          final boxHeight = constraints.constrainHeight();
+          const dashWidth = 5.0;
+          final dashHeight = height;
+          final dashCount = (boxHeight / (2 * dashWidth)).floor();
+          return Flex(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+         
+            direction: Axis.vertical,
+            children: List.generate(dashCount, (_) {
+              return SizedBox(
+                width: dashHeight,
+                height: dashWidth,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(color: color),
+                ),
+              );
+            }),
+          );
+        },
+      ),
+    );
+  }
 }
