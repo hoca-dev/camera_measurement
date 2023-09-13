@@ -3,8 +3,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_ruler_picker/flutter_ruler_picker.dart';
-import 'package:resizable_draggable_widget/resizable_draggable_widget.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:test1/cameraPicPriview.dart';
@@ -204,10 +202,10 @@ double bannerHeight = 200;
                
        //center right
          Positioned(
-          top: top + height / 2 - ballDiameter / 0.55,
-          left: left + width - ballDiameter / 0.4,
+          // top: top + height / 2 - ballDiameter / 0.55,
+          left: left + width - ballDiameter / 1,
         
-          child: ManipulatingBall(
+          child: ManipulatingBall2(
             onDrag: (dx, dy) {
               var newWidth = width + dx;
 
@@ -220,7 +218,7 @@ double bannerHeight = 200;
         //new 
          Positioned(
           // top: top + height / 2 - ballDiameter / 0.55,
-          left: left - ballDiameter / 2,
+          left: left - ballDiameter / 0.3,
           // bottom: 1,
           child: ManipulatingBall2(
             onDrag: (dx, dy) {
@@ -230,29 +228,20 @@ double bannerHeight = 200;
                 width = newWidth > 0 ? newWidth : 0;
                 left = left + dx;
               });
-            }, customChild:  Container(
-    
-              // color: Colors.red,
-          
-              child: Row(
-                children: [
-                 const LengthIdentifier(),
-                    //cardBox
-              Positioned(
-               top: 50,
-               left: 50,
-               child: Align(
-                 alignment: AlignmentDirectional.bottomCenter,
-                 child: SizedBox(
-                   height: 100,
-                   width: 99,
-                   child: Image.asset('assets/frame/cardHolder.png'),
-                 ),
-               ),
-                ),
-                  
-                ],
+            }, customChild:  Row(
+              children: [
+               const LengthIdentifier(),
+                  //cardBox
+            Padding(
+              padding: const EdgeInsets.only(top: 215 ),
+              child: SizedBox(
+                height: 100,
+                width: 99,
+                child: Image.asset('assets/frame/cardHolder.png'),
               ),
+            ),
+                
+              ],
             ),)
           ),
 
@@ -263,8 +252,7 @@ double bannerHeight = 200;
   
   }
 
-
-Widget button(IconData icon, Alignment alignment) {
+ Widget button(IconData icon, Alignment alignment) {
   return Align(
     alignment: alignment,
     child: Container(
@@ -296,48 +284,4 @@ Widget button(IconData icon, Alignment alignment) {
 }
 
 
-}
-
-
-
-
-
-
-class LengthIdentifier extends StatelessWidget {
-  const LengthIdentifier({Key? key, this.height = 2, this.color = Colors.red})
-      : super(key: key);
-  final double height;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    return SizedBox(
-      height: width,
-    
-   
-      child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          final boxHeight = constraints.constrainHeight();
-          const dashWidth = 5.0;
-          final dashHeight = height;
-          final dashCount = (boxHeight / (2 * dashWidth)).floor();
-          return Flex(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-         
-            direction: Axis.vertical,
-            children: List.generate(dashCount, (_) {
-              return SizedBox(
-                width: dashHeight,
-                height: dashWidth,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(color: color),
-                ),
-              );
-            }),
-          );
-        },
-      ),
-    );
-  }
 }
