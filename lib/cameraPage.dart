@@ -149,16 +149,16 @@ double bannerHeight = 200;
               ),
             ),
             //cardBox
-            Positioned(
-                  top: height /1.6,
+            // Positioned(
+            //       top: height /1.6,
                 
-                  left: 10,
-                  child: SizedBox(
-                    height: 100,
-                    width: 99,
-                    child: Image.asset('assets/frame/cardHolder.png'),
-                  ),
-                ),
+            //       left: 10,
+            //       child: SizedBox(
+            //         height: 100,
+            //         width: 99,
+            //         child: Image.asset('assets/frame/cardHolder.png'),
+            //       ),
+            //     ),
              Positioned(
                   bottom: height /2.5,
                 
@@ -178,10 +178,10 @@ double bannerHeight = 200;
                     child: button(Icons.camera_alt_outlined, Alignment.bottomCenter,),
                   ),
                 ),
-              const Positioned(
-                left: 8,
-                child: LengthIdentifier()
-              ),
+              // const Positioned(
+              //   left: 8,
+              //   child: LengthIdentifier()
+              // ),
              //TODO draggable Container 
     //  Align(
     //   alignment: AlignmentDirectional.center,
@@ -200,11 +200,13 @@ double bannerHeight = 200;
     //           },
     //         ),
     //  ),
+
                
        //center right
          Positioned(
           top: top + height / 2 - ballDiameter / 0.55,
           left: left + width - ballDiameter / 0.4,
+        
           child: ManipulatingBall(
             onDrag: (dx, dy) {
               var newWidth = width + dx;
@@ -215,20 +217,44 @@ double bannerHeight = 200;
             }, customChild: const LengthIdentifier(),
           ),
         ),
-        
-        //  Positioned(
-        //   top: top + height / 2 - ballDiameter / 0.55,
-        //   left: left - ballDiameter / 2,
-        //   child: ManipulatingBall(
-        //     onDrag: (dx, dy) {
-        //       var newWidth = width - dx;
+        //new 
+         Positioned(
+          // top: top + height / 2 - ballDiameter / 0.55,
+          left: left - ballDiameter / 2,
+          // bottom: 1,
+          child: ManipulatingBall2(
+            onDrag: (dx, dy) {
+              var newWidth = width - dx;
 
-        //       setState(() {
-        //         width = newWidth > 0 ? newWidth : 0;
-        //         left = left + dx;
-        //       });
-        //     }, customChild: Image.asset('assets/icons/vertical.png', fit: BoxFit.fitHeight,),),
-        //   ),
+              setState(() {
+                width = newWidth > 0 ? newWidth : 0;
+                left = left + dx;
+              });
+            }, customChild:  Container(
+    
+              // color: Colors.red,
+          
+              child: Row(
+                children: [
+                 const LengthIdentifier(),
+                    //cardBox
+              Positioned(
+               top: 50,
+               left: 50,
+               child: Align(
+                 alignment: AlignmentDirectional.bottomCenter,
+                 child: SizedBox(
+                   height: 100,
+                   width: 99,
+                   child: Image.asset('assets/frame/cardHolder.png'),
+                 ),
+               ),
+                ),
+                  
+                ],
+              ),
+            ),)
+          ),
 
         ],
       ),
@@ -278,7 +304,7 @@ Widget button(IconData icon, Alignment alignment) {
 
 
 class LengthIdentifier extends StatelessWidget {
-  const LengthIdentifier({Key? key, this.height = 2, this.color = Colors.white})
+  const LengthIdentifier({Key? key, this.height = 2, this.color = Colors.red})
       : super(key: key);
   final double height;
   final Color color;
@@ -288,6 +314,7 @@ class LengthIdentifier extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     return SizedBox(
       height: width,
+    
    
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
