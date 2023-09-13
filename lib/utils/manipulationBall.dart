@@ -101,4 +101,52 @@ class _ManipulatingBall2State extends State<ManipulatingBall2> {
       ),
     );
   }
+ 
+
 }
+
+
+
+
+
+
+class LengthIdentifier extends StatelessWidget {
+  const LengthIdentifier({Key? key, this.height = 2, this.color = Colors.red})
+      : super(key: key);
+  final double height;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    return SizedBox(
+      height: width,
+    
+   
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          final boxHeight = constraints.constrainHeight();
+          const dashWidth = 5.0;
+          final dashHeight = height;
+          final dashCount = (boxHeight / (2 * dashWidth)).floor();
+          return Flex(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+         
+            direction: Axis.vertical,
+            children: List.generate(dashCount, (_) {
+              return SizedBox(
+                width: dashHeight,
+                height: dashWidth,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(color: color),
+                ),
+              );
+            }),
+          );
+        },
+      ),
+    );
+  }
+}
+
+
