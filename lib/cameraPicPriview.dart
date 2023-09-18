@@ -1,50 +1,64 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:test1/cameraPage.dart';
 
-
-
-
-
 class PicturePreviewPage extends StatelessWidget {
   Uint8List capturedImage;
-   PicturePreviewPage({super.key, required this.capturedImage});
+
+  PicturePreviewPage({super.key, required this.capturedImage});
 
   @override
   Widget build(BuildContext context) {
-    const snackBarMessage = SnackBar(content:  Text('사진이 저장되었습니다'));
-    return Scaffold(
+    const snackBarMessage = SnackBar(content: Text('사진이 저장되었습니다'));
+    return WillPopScope(
+      onWillPop: () async {
+        await Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const CameraPage()));
+        return true;
+      },
+      child: Scaffold(
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
           actions: [
-            TextButton(onPressed: () async {
-              
+            TextButton(
+              onPressed: () async {
                 ScaffoldMessenger.of(context).showSnackBar(snackBarMessage);
                 await ImageGallerySaver.saveImage(capturedImage);
 
-              // GallerySaver.saveImage(capturedImage);
-            }, child: const Text('저장',style: TextStyle(color: Colors.blue, fontSize: 17, fontWeight: FontWeight.bold),),),
+                // GallerySaver.saveImage(capturedImage);
+              },
+              child: const Text(
+                '저장',
+                style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
           ],
           leading: IconButton(
-            onPressed: (){
-                // circularProgressView();
-         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const CameraPage()));
+            onPressed: () {
+              // circularProgressView();
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const CameraPage()));
             },
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.black,),
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+            ),
           ),
-        
         ),
         body: Center(child: Image.memory(capturedImage)),
-      );
+      ),
+    );
   }
 }
 
 //  Future<dynamic> ShowCapturedWidget(
 //       BuildContext context, Uint8List capturedImage) {
-          
+
 //     return showDialog(
 //       useSafeArea: false,
 //       context: context,
@@ -54,7 +68,7 @@ class PicturePreviewPage extends StatelessWidget {
 //           backgroundColor: Colors.transparent,
 //           actions: [
 //             TextButton(onPressed: () async {
-              
+
 //                 ScaffoldMessenger.of(context).showSnackBar(snackBarMessage);
 //                 await ImageGallerySaver.saveImage(capturedImage);
 
@@ -65,14 +79,12 @@ class PicturePreviewPage extends StatelessWidget {
 //             onPressed: () => Navigator.pop(context),
 //             icon: const Icon(Icons.arrow_back_ios, color: Colors.black,),
 //           ),
-        
+
 //         ),
 //         body: Center(child: Image.memory(capturedImage)),
 //       ),
 //     );
 //   }
-
-
 
 // import 'dart:io';
 
@@ -84,7 +96,6 @@ class PicturePreviewPage extends StatelessWidget {
 // import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 // import 'package:test1/cameraPage.dart';
 // import 'package:test1/utils/manipulationBall.dart';
-
 
 // class PreviewPage extends StatefulWidget {
 
@@ -116,7 +127,7 @@ class PicturePreviewPage extends StatelessWidget {
 
 //   @override
 //   void initState()  {
-    
+
 //     SystemChrome.setPreferredOrientations([
 //       DeviceOrientation.landscapeRight,
 //       DeviceOrientation.landscapeLeft,
@@ -140,15 +151,13 @@ class PicturePreviewPage extends StatelessWidget {
 //           });
 //   }
 
- 
-
 //   @override
 //   Widget build(BuildContext context) {
 //     const snackBarMessage = SnackBar(content:  Text('사진이 저장되었습니다'));
 //     return Scaffold(
 //       body: Stack(
-//         children: [  
-        
+//         children: [
+
 //           Padding(
 //             padding:const  EdgeInsets.only(left: 10, right: 10),
 //             child: Align(
@@ -162,16 +171,16 @@ class PicturePreviewPage extends StatelessWidget {
 //               circularProgressView();
 //                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const CameraPage()));
 //             }
-            
+
 //                   ),
 //                     MaterialButton(
 //               child: const Text('저장', style: TextStyle(color: Colors.blue, fontSize: 17, fontWeight: FontWeight.bold),),
 //               onPressed: (){
-//                 //TODO => main page once the picture is saved 
+//                 //TODO => main page once the picture is saved
 //                 ScaffoldMessenger.of(context).showSnackBar(snackBarMessage);
 //                 GallerySaver.saveImage(widget.picture.path);
 //               }),
-          
+
 //                 ],
 //               ),
 //             ),
@@ -184,11 +193,11 @@ class PicturePreviewPage extends StatelessWidget {
 //          ),
 //            //ruler
 
-//          // top left 
+//          // top left
 //                   Positioned(
 //           top: top - ballDiameter / 2,
 //           left: left - ballDiameter / 2,
-//           child: ManipulatingBall( 
+//           child: ManipulatingBall(
 //              customChild:Image.asset('assets/icons/topLeft.png', fit: BoxFit.contain,),
 //             onDrag: (dx, dy) {
 //               var mid = (dx + dy) / 2;
@@ -343,7 +352,7 @@ class PicturePreviewPage extends StatelessWidget {
 //               });
 //             },
 //           ),),
-       
+
 //         ],
 //       ),
 //     );
