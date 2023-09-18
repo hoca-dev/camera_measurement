@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:test1/cameraPicPriview.dart';
+import 'package:test1/utils/rulerHelper.dart';
 import 'package:test1/utils/manipulationBall.dart';
 
 final ballDiameter = 90.0;
@@ -148,102 +149,33 @@ double bannerHeight = 200;
                   ),
               ),
             ),
-            //cardBox
-            // Positioned(
-            //       top: height /1.6,
-                
-            //       left: 10,
-            //       child: SizedBox(
-            //         height: 100,
-            //         width: 99,
-            //         child: Image.asset('assets/frame/cardHolder.png'),
-            //       ),
-            //     ),
              Positioned(
-                  bottom: height /2.5,
-                
-                  right: 13,
-                  child: GestureDetector(
-                    onTap: ()   {
-                       circularProgressView();
-                     screenshotController
+              bottom: height / 2.5,
+              right: 13,
+              child: GestureDetector(
+                onTap: () {
+                  circularProgressView();
+                  screenshotController
                       .capture(delay: const Duration(milliseconds: 10))
                       .then((capturedImage) async {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=> PicturePreviewPage(capturedImage: capturedImage!)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PicturePreviewPage(
+                                capturedImage: capturedImage!)));
                     // ShowCapturedWidget(context, capturedImage!);
                   }).catchError((onError) {
                     print(onError);
                   });
-                    },
-                    child: button(Icons.camera_alt_outlined, Alignment.bottomCenter,),
-                  ),
+                },
+                child: button(
+                  Icons.camera_alt_outlined,
+                  Alignment.bottomCenter,
                 ),
-              // const Positioned(
-              //   left: 8,
-              //   child: LengthIdentifier()
-              // ),
-             //TODO draggable Container 
-//  RangeSliderExample(
+              ),
+            ),
 
-//               onChanged: (RangeValues values) {
-//                 setState(() {
-//                   left = values.start;
-//                   right = values.end;
-
-//                   _centimeters = (values.end - values.start).toInt(); // Assuming each unit of the range represents 1 cm.
-//                 });
-//               },
-//             ),
-
-               
-       //center right
-        //  Positioned(
-        //   // top: top + height / 2 - ballDiameter / 0.55,
-        //   left: left + width - ballDiameter / 1,
-        
-        //   child: ManipulatingBall2(
-        //     onDrag: (dx, dy) {
-        //       var newWidth = width + dx;
-
-        //       setState(() {
-        //         width = newWidth > 0 ? newWidth : 0;
-        //       });
-        //     }, customChild: const LengthIdentifier(),
-        //   ),
-        // ),
-        //new 
-        //  Positioned(
-        //   // top: top + height / 2 - ballDiameter / 0.55,
-        //   left: left - ballDiameter / 0.3,
-        //   // bottom: 1,
-        //   child: ManipulatingBall2(
-        //     onDrag: (dx, dy) {
-        //       var newWidth = width - dx;
-
-        //       setState(() {
-        //         width = newWidth > 0 ? newWidth : 0;
-        //         left = left + dx;
-        //       });
-        //     }, customChild:  Row(
-        //       children: [
-        //        const LengthIdentifier(),
-        //           //cardBox
-        //     Padding(
-        //       padding: const EdgeInsets.only(top: 215 ),
-        //       child: SizedBox(
-        //         height: 100,
-        //         width: 99,
-        //         child: Image.asset('assets/frame/cardHolder.png'),
-        //       ),
-        //     ),
-                
-        //       ],
-        //     ),),
-        //   ),
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: RulerWidget(),
-          )
+          RulerWidget()
 
         ],
       ),
@@ -289,117 +221,3 @@ double bannerHeight = 200;
 
 
 
-class RulerWidget extends StatefulWidget {
-  @override
-  _RulerWidgetState createState() => _RulerWidgetState();
-}
-
-class _RulerWidgetState extends State<RulerWidget> {
-  double leftSliderValue = 0.0;
-  double rightSliderValue = 70.0;
-
-  @override
-  Widget build(BuildContext context) {
-    double length = rightSliderValue - leftSliderValue;
-    double height = MediaQuery.of(context).size.height;
-    double width =  MediaQuery.of(context).size.width;
-
-    return Padding(
-      padding: const EdgeInsets.only(left: 8,),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '길이: ${length.toStringAsFixed(2)} 센티미터',
-              style:const TextStyle(fontSize: 24, color: Colors.red),
-            ),
-         
-            SizedBox(
-              width: width,
-              height: height / 1.5,
-              child: Stack(
-                children: [
-                  Positioned(
-                    left: (leftSliderValue / 70) * MediaQuery.of(context).size.width,
-                    child: GestureDetector(
-                      onHorizontalDragUpdate: (details) {
-                        setState(() {
-                          leftSliderValue += (details.delta.dx / MediaQuery.of(context).size.width) * 70;
-                          leftSliderValue = leftSliderValue.clamp(0.0, rightSliderValue);
-                        });
-                      },
-                      child:  ManipulatingBall2(
-            onDrag: (dx, dy) {
-              var newWidth = width - dx;
-
-              setState(() {
-                width = newWidth > 0 ? newWidth : 0;
-                left = left + dx;
-              });
-            }, customChild:  Row(
-              children: [
-              
-               const LengthIdentifier(),
-               //sensible container
-              
-                  //cardBox
-            Padding(
-              padding: const EdgeInsets.only(top: 60 ),
-              child: SizedBox(
-                height: 100,
-                width: 99,
-                child: Image.asset('assets/frame/cardHolder.png'),
-              ),
-            ),
-           
-                
-              ],
-            ),
-            ),
-                    ),
-                  ),
-                  Positioned(
-                    //left: (rightSliderValue / 73) * MediaQuery.of(context).size.width - 2, old value where it starts from 70cm
-                    left: (rightSliderValue / 73) * MediaQuery.of(context).size.width - 2, // Adjust for line width.
-                    child: GestureDetector(
-                      onHorizontalDragUpdate: (details) {
-                        setState(() {
-                          rightSliderValue += (details.delta.dx / MediaQuery.of(context).size.width) * 70;
-                          rightSliderValue = rightSliderValue.clamp(leftSliderValue, 70.0);
-                        });
-                      },
-                      child:  ManipulatingBall2(
-                            onDrag: (dx, dy) {
-                              var newWidth = width - dx;
-                  
-                              setState(() {
-                                width = newWidth > 0 ? newWidth : 0;
-                                left = left + dx;
-                              });
-                            }, customChild:  Row(
-                              children: [
-                  //sensible container part 
-                               Container(
-                                // color: Colors.red,
-                                width: 15,
-                               ),
-                               const LengthIdentifier(),
-                                //sensible container part 
-                               Container(
-                                // color: Colors.red,
-                                width: 15,
-                               ),
-                              ],
-                            ),),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

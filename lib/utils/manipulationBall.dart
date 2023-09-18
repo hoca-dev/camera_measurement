@@ -188,3 +188,75 @@ class RangeSliderExampleState extends State<RangeSliderExample> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+              // const Positioned(
+              //   left: 8,
+              //   child: LengthIdentifier()
+              // ),
+             //TODO draggable Container 
+//  RangeSliderExample(
+
+//               onChanged: (RangeValues values) {
+//                 setState(() {
+//                   left = values.start;
+//                   right = values.end;
+
+//                   _centimeters = (values.end - values.start).toInt(); // Assuming each unit of the range represents 1 cm.
+//                 });
+//               },
+//             ),
+
+               
+       //center right
+        //  Positioned(
+        //   // top: top + height / 2 - ballDiameter / 0.55,
+        //   left: left + width - ballDiameter / 1,
+        
+        //   child: ManipulatingBall2(
+        //     onDrag: (dx, dy) {
+        //       var newWidth = width + dx;
+
+        //       setState(() {
+        //         width = newWidth > 0 ? newWidth : 0;
+        //       });
+        //     }, customChild: const LengthIdentifier(),
+        //   ),
+        // ),
+        //new 
+        //  Positioned(
+        //   // top: top + height / 2 - ballDiameter / 0.55,
+        //   left: left - ballDiameter / 0.3,
+        //   // bottom: 1,
+        //   child: ManipulatingBall2(
+        //     onDrag: (dx, dy) {
+        //       var newWidth = width - dx;
+
+        //       setState(() {
+        //         width = newWidth > 0 ? newWidth : 0;
+        //         left = left + dx;
+        //       });
+        //     }, customChild:  Row(
+        //       children: [
+        //        const LengthIdentifier(),
+        //           //cardBox
+        //     Padding(
+        //       padding: const EdgeInsets.only(top: 215 ),
+        //       child: SizedBox(
+        //         height: 100,
+        //         width: 99,
+        //         child: Image.asset('assets/frame/cardHolder.png'),
+        //       ),
+        //     ),
+                
+        //       ],
+        //     ),),
+        //   ),
