@@ -8,7 +8,11 @@ import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:test1/cameraPicPriview.dart';
 import 'package:test1/utils/manipulationBall.dart';
 
-
+final ballDiameter = 90.0;
+    double height = 200;
+  double width = 100;
+  double top = 100;
+  double left = 320;
 class CameraPage extends StatefulWidget {
   const CameraPage({super.key});
 
@@ -88,11 +92,7 @@ return const CircularProgressIndicator();
             );
           });
   }
-final ballDiameter = 90.0;
-    double height = 200;
-  double width = 100;
-  double top = 100;
-  double left = 320;
+
     void onDrag(double dx, double dy) {
     var newHeight = height + dy;
     var newWidth = width + dx;
@@ -102,6 +102,8 @@ final ballDiameter = 90.0;
       width = newWidth > 0 ? newWidth : 0;
     });
   }
+   double right = 100;
+  int _centimeters = 0;
   @override
   Widget build(BuildContext context) {
 double bannerHeight = 200;
@@ -181,69 +183,67 @@ double bannerHeight = 200;
               //   child: LengthIdentifier()
               // ),
              //TODO draggable Container 
-    //  Align(
-    //   alignment: AlignmentDirectional.center,
-    //    child: ResizableDraggableWidget(
-    //           initHeight: 300,
-    //           initWidth: 300,
-    //           showSquare: true,
-    //           draggable: true,
-    //           bgColor: Colors.transparent,
-    //           squareColor: Colors.green,
-    //           changed: (width, height, tranformOffset) {
-              
-              
-    //             print(
-    //                 "width: ${width.toStringAsFixed(2)}, height: $height, tranformOffset: $tranformOffset");
-    //           },
-    //         ),
-    //  ),
+//  RangeSliderExample(
+
+//               onChanged: (RangeValues values) {
+//                 setState(() {
+//                   left = values.start;
+//                   right = values.end;
+
+//                   _centimeters = (values.end - values.start).toInt(); // Assuming each unit of the range represents 1 cm.
+//                 });
+//               },
+//             ),
 
                
        //center right
-         Positioned(
-          // top: top + height / 2 - ballDiameter / 0.55,
-          left: left + width - ballDiameter / 1,
+        //  Positioned(
+        //   // top: top + height / 2 - ballDiameter / 0.55,
+        //   left: left + width - ballDiameter / 1,
         
-          child: ManipulatingBall2(
-            onDrag: (dx, dy) {
-              var newWidth = width + dx;
+        //   child: ManipulatingBall2(
+        //     onDrag: (dx, dy) {
+        //       var newWidth = width + dx;
 
-              setState(() {
-                width = newWidth > 0 ? newWidth : 0;
-              });
-            }, customChild: const LengthIdentifier(),
-          ),
-        ),
+        //       setState(() {
+        //         width = newWidth > 0 ? newWidth : 0;
+        //       });
+        //     }, customChild: const LengthIdentifier(),
+        //   ),
+        // ),
         //new 
-         Positioned(
-          // top: top + height / 2 - ballDiameter / 0.55,
-          left: left - ballDiameter / 0.3,
-          // bottom: 1,
-          child: ManipulatingBall2(
-            onDrag: (dx, dy) {
-              var newWidth = width - dx;
+        //  Positioned(
+        //   // top: top + height / 2 - ballDiameter / 0.55,
+        //   left: left - ballDiameter / 0.3,
+        //   // bottom: 1,
+        //   child: ManipulatingBall2(
+        //     onDrag: (dx, dy) {
+        //       var newWidth = width - dx;
 
-              setState(() {
-                width = newWidth > 0 ? newWidth : 0;
-                left = left + dx;
-              });
-            }, customChild:  Row(
-              children: [
-               const LengthIdentifier(),
-                  //cardBox
-            Padding(
-              padding: const EdgeInsets.only(top: 215 ),
-              child: SizedBox(
-                height: 100,
-                width: 99,
-                child: Image.asset('assets/frame/cardHolder.png'),
-              ),
-            ),
+        //       setState(() {
+        //         width = newWidth > 0 ? newWidth : 0;
+        //         left = left + dx;
+        //       });
+        //     }, customChild:  Row(
+        //       children: [
+        //        const LengthIdentifier(),
+        //           //cardBox
+        //     Padding(
+        //       padding: const EdgeInsets.only(top: 215 ),
+        //       child: SizedBox(
+        //         height: 100,
+        //         width: 99,
+        //         child: Image.asset('assets/frame/cardHolder.png'),
+        //       ),
+        //     ),
                 
-              ],
-            ),)
-          ),
+        //       ],
+        //     ),),
+        //   ),
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: RulerWidget(),
+          )
 
         ],
       ),
@@ -284,4 +284,122 @@ double bannerHeight = 200;
 }
 
 
+}
+
+
+
+
+class RulerWidget extends StatefulWidget {
+  @override
+  _RulerWidgetState createState() => _RulerWidgetState();
+}
+
+class _RulerWidgetState extends State<RulerWidget> {
+  double leftSliderValue = 0.0;
+  double rightSliderValue = 70.0;
+
+  @override
+  Widget build(BuildContext context) {
+    double length = rightSliderValue - leftSliderValue;
+    double height = MediaQuery.of(context).size.height;
+    double width =  MediaQuery.of(context).size.width;
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 8,),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              '길이: ${length.toStringAsFixed(2)} 센티미터',
+              style:const TextStyle(fontSize: 24, color: Colors.red),
+            ),
+         
+            SizedBox(
+              width: width,
+              height: height / 1.5,
+              child: Stack(
+                children: [
+                  Positioned(
+                    left: (leftSliderValue / 70) * MediaQuery.of(context).size.width,
+                    child: GestureDetector(
+                      onHorizontalDragUpdate: (details) {
+                        setState(() {
+                          leftSliderValue += (details.delta.dx / MediaQuery.of(context).size.width) * 70;
+                          leftSliderValue = leftSliderValue.clamp(0.0, rightSliderValue);
+                        });
+                      },
+                      child:  ManipulatingBall2(
+            onDrag: (dx, dy) {
+              var newWidth = width - dx;
+
+              setState(() {
+                width = newWidth > 0 ? newWidth : 0;
+                left = left + dx;
+              });
+            }, customChild:  Row(
+              children: [
+              
+               const LengthIdentifier(),
+               //sensible container
+              
+                  //cardBox
+            Padding(
+              padding: const EdgeInsets.only(top: 60 ),
+              child: SizedBox(
+                height: 100,
+                width: 99,
+                child: Image.asset('assets/frame/cardHolder.png'),
+              ),
+            ),
+           
+                
+              ],
+            ),
+            ),
+                    ),
+                  ),
+                  Positioned(
+                    //left: (rightSliderValue / 73) * MediaQuery.of(context).size.width - 2, old value where it starts from 70cm
+                    left: (rightSliderValue / 73) * MediaQuery.of(context).size.width - 2, // Adjust for line width.
+                    child: GestureDetector(
+                      onHorizontalDragUpdate: (details) {
+                        setState(() {
+                          rightSliderValue += (details.delta.dx / MediaQuery.of(context).size.width) * 70;
+                          rightSliderValue = rightSliderValue.clamp(leftSliderValue, 70.0);
+                        });
+                      },
+                      child:  ManipulatingBall2(
+                            onDrag: (dx, dy) {
+                              var newWidth = width - dx;
+                  
+                              setState(() {
+                                width = newWidth > 0 ? newWidth : 0;
+                                left = left + dx;
+                              });
+                            }, customChild:  Row(
+                              children: [
+                  //sensible container part 
+                               Container(
+                                // color: Colors.red,
+                                width: 15,
+                               ),
+                               const LengthIdentifier(),
+                                //sensible container part 
+                               Container(
+                                // color: Colors.red,
+                                width: 15,
+                               ),
+                              ],
+                            ),),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

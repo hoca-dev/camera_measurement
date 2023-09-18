@@ -150,3 +150,41 @@ class LengthIdentifier extends StatelessWidget {
 }
 
 
+
+
+class RangeSliderExample extends StatefulWidget {
+  final ValueChanged<RangeValues> onChanged;
+
+  const RangeSliderExample({Key? key, required this.onChanged}) : super(key: key);
+
+  @override
+  RangeSliderExampleState createState() => RangeSliderExampleState();
+}
+
+class RangeSliderExampleState extends State<RangeSliderExample> {
+  RangeValues _currentRangeValues = const RangeValues(0, 100);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 100,
+      child: RangeSlider(
+        values: _currentRangeValues,
+        min: 0,
+        max: 100,
+        divisions: 100,
+        labels: RangeLabels(
+          _currentRangeValues.start.round().toString(),
+          _currentRangeValues.end.round().toString(),
+        ),
+        onChanged: (RangeValues values) {
+          setState(() {
+            _currentRangeValues = values;
+          });
+          widget.onChanged(values);
+        },
+
+      ),
+    );
+  }
+}
